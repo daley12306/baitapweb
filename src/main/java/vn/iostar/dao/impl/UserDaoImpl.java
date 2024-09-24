@@ -213,6 +213,25 @@ public class UserDaoImpl implements IUserDao {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void resetPassword(String email, String password) {
+		String sql = "UPDATE users SET password = ? WHERE email = ?";
+
+		try {
+			conn = new DBConnectSQL().getConnection();
+
+			ps = conn.prepareStatement(sql);
+
+			ps.setString(1, password);
+			ps.setString(2, email);
+
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 		try {
@@ -222,5 +241,4 @@ public class UserDaoImpl implements IUserDao {
 			e.printStackTrace();
 		}
 	}
-
 }

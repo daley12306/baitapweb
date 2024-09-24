@@ -19,4 +19,5 @@ public interface IUserService {
 	
 	void update(String username, String fullname, String image, String phone);
 
+	void resetPassword(String email, String password);
 }

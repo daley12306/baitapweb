@@ -58,5 +58,10 @@ public class UserServiceImpl implements IUserService{
 	public void update(String username, String fullname, String image, String phone) {
 		userDao.update(username, fullname, image, phone);
 	}
+
+	@Override
+	public void resetPassword(String email, String password) {
+		userDao.resetPassword(email, password);
+	}
 	
 }

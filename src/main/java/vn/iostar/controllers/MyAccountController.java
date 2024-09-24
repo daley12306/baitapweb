@@ -53,32 +53,28 @@ public class MyAccountController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		UserModel account = (UserModel) session.getAttribute("account");
-		
+
 		String fileName = account.getImage();
 		String username = account.getUsername();
 		String image = account.getImage();
 		String fullname = req.getParameter("fullname");
 		String phone = req.getParameter("phone");
-		
+
 		// Xu ly upload file
-		String uploadPath = getServletContext().getRealPath("") + Constant.UPLOAD_DIRECTORY;
-		File uploadDir = new File(uploadPath);
-		if (!uploadDir.exists())
-			uploadDir.mkdir();
-		try {
-//			for (Part part : req.getParts()) {
-//				fileName =  part.getSubmittedFileName();
-//				part.write(uploadPath + File.separator + fileName);
-//			}
-			Part part = req.getPart("multiPartServlet");
-			if(part != null) {
-				fileName =  part.getSubmittedFileName();
+		Part part = req.getPart("multiPartServlet");
+		if (part != null && part.getSize() > 0) {
+			String uploadPath = getServletContext().getRealPath("") + Constant.UPLOAD_DIRECTORY;
+			File uploadDir = new File(uploadPath);
+			if (!uploadDir.exists())
+				uploadDir.mkdir();
+			try {
+				fileName = part.getSubmittedFileName();
 				part.write(uploadPath + File.separator + fileName);
 				req.setAttribute("message", "File " + fileName + " has uploaded successfully!");
 				image = "./uploads/" + fileName;
+			} catch (FileNotFoundException fne) {
+				req.setAttribute("message", "There was an error: " + fne.getMessage());
 			}
-		} catch (FileNotFoundException fne) {
-			req.setAttribute("message", "There was an error: " + fne.getMessage());
 		}
 
 		resp.setContentType("text/html");
@@ -86,12 +82,12 @@ public class MyAccountController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		service.update(username, image, fullname, phone);
-		
+
 		account.setImage(image);
 		account.setFullname(fullname);
 		account.setPhone(phone);
 		session.setAttribute("account", account);
-		
-		req.getRequestDispatcher("/views/myaccount.jsp").forward(req, resp);
+
+		doGet(req, resp);
 	}
 }
