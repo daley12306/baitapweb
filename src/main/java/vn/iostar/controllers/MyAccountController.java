@@ -61,8 +61,7 @@ public class MyAccountController extends HttpServlet {
 		String phone = req.getParameter("phone");
 		
 		// Xu ly upload file
-//		String uploadPath = getServletContext().getRealPath("") + Constant.UPLOAD_DIRECTORY;
-		String uploadPath = Constant.UPLOAD_DIRECTORY;
+		String uploadPath = getServletContext().getRealPath("") + Constant.UPLOAD_DIRECTORY;
 		File uploadDir = new File(uploadPath);
 		if (!uploadDir.exists())
 			uploadDir.mkdir();
