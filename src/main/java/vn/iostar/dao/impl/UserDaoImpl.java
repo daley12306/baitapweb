@@ -191,6 +191,28 @@ public class UserDaoImpl implements IUserDao {
 		}
 		return duplicate;
 	}
+	
+	@Override
+	public void update(String username, String image, String fullname, String phone) {
+
+		String sql = "UPDATE users SET fullname = ?, image = ?, phone = ? WHERE username = ?";
+
+		try {
+			conn = new DBConnectSQL().getConnection();
+
+			ps = conn.prepareStatement(sql);
+
+			ps.setString(1, fullname);
+			ps.setString(2, image);
+			ps.setString(3, phone);
+			ps.setString(4, username);
+
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 		try {

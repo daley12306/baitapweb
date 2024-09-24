@@ -53,5 +53,10 @@ public class UserServiceImpl implements IUserService{
 	public boolean checkExistPhone(String phone) {
 		return userDao.checkExistUsername(phone);
 	}
+
+	@Override
+	public void update(String username, String fullname, String image, String phone) {
+		userDao.update(username, fullname, image, phone);
+	}
 	
 }
