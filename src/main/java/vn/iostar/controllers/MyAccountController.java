@@ -63,7 +63,7 @@ public class MyAccountController extends HttpServlet {
 		// Xu ly upload file
 		Part part = req.getPart("multiPartServlet");
 		if (part != null && part.getSize() > 0) {
-			String uploadPath = getServletContext().getRealPath("") + Constant.UPLOAD_DIRECTORY;
+			String uploadPath = getServletContext().getRealPath("") + Constant.DIR;
 			File uploadDir = new File(uploadPath);
 			if (!uploadDir.exists())
 				uploadDir.mkdir();
